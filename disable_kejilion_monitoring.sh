@@ -1,22 +1,22 @@
 #!/bin/bash
 #
-# This script disables the 'send_stats' monitoring feature in the kejilion scripts.
-# It works by changing ENABLE_STATS="true" to ENABLE_STATS="false".
+# This script disables the 'send_stats' monitoring feature in kejilion.sh.
+# It modifies 'kejilion.sh' in its own directory and the '/usr/local/bin/k' command.
 
 set -e
 
-# Paths where the kejilion script and its copies might be located
-FILE1="/home/ubuntu/kj/kejilion.sh"
-FILE2="/home/ubuntu/kejilion.sh"
-FILE3="/usr/local/bin/k"
+# Get the absolute path of the directory where this script is located
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+
+# Define file paths
+FILE1="$SCRIPT_DIR/kejilion.sh"
+FILE2="/usr/local/bin/k"
 
 # Function to patch a file
 disable_monitoring_in_file() {
     local file_path="$1"
     if [ -f "$file_path" ]; then
-        # Check if monitoring is enabled before trying to disable it
         if grep -q 'ENABLE_STATS="true"' "$file_path"; then
-            # Use sed to replace the line. The -i flag modifies the file in-place.
             sed -i 's/ENABLE_STATS="true"/ENABLE_STATS="false"/' "$file_path"
             echo "Successfully disabled monitoring in: $file_path"
         else
@@ -27,13 +27,11 @@ disable_monitoring_in_file() {
     fi
 }
 
-echo "Attempting to disable monitoring feature in kejilion scripts..."
+echo "Attempting to disable monitoring feature..."
 echo "--------------------------------------------------"
 
 disable_monitoring_in_file "$FILE1"
 disable_monitoring_in_file "$FILE2"
-disable_monitoring_in_file "$FILE3"
 
 echo "--------------------------------------------------"
 echo "Script execution finished."
-echo "The monitoring feature should now be disabled."
