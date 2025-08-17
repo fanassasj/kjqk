@@ -10,17 +10,20 @@
 
 这是一个非官方的修改版本，原脚本及其所有功能归原作者所有。
 
-## 使用方法
+## 一键安装与运行
 
-您现在可以从您自己的这个 GitHub 仓库中，使用以下命令来安全地运行脚本：
+在全新的服务器上，使用以下一键命令来安装并启动脚本。它会自动处理下载、授权和配置快捷命令的所有步骤。
 
 ```bash
-bash <(curl -sL https://raw.githubusercontent.com/fanassasj/kjqk/main/kejilion.sh)
+curl -sL -o /usr/local/bin/k https://raw.githubusercontent.com/fanassasj/kjqk/main/kejilion.sh && chmod +x /usr/local/bin/k && /usr/local/bin/k && source ~/.bashrc && echo "安装完成，请使用 k 命令开始。"
 ```
 
-### 关于安全
-
-由于脚本托管在您自己的仓库中，您对代码有完全的控制权，避免了从未知来源执行代码的风险。
+**这条命令会做什么？**
+1.  从您自己的仓库下载去除了监控的脚本。
+2.  将脚本放置在 `/usr/local/bin/k`，使其成为一个系统命令。
+3.  赋予脚本执行权限。
+4.  运行脚本一次，以完成别名创建等初始化设置。
+5.  重新加载您的终端配置，让 `k` 命令立即生效。
 
 ---
 
@@ -28,16 +31,12 @@ bash <(curl -sL https://raw.githubusercontent.com/fanassasj/kjqk/main/kejilion.s
 
 本仓库中包含的 `kejilion.sh` 已经是去除了监控的版本。
 
-但如果您从其他地方获取了脚本，或者不确定脚本是否去除了监控，可以使用本仓库中附带的 `disable_kejilion_monitoring.sh` 脚本来确保监控被关闭。
+但如果您在别的服务器上想快速禁用一个未去控的 `kejilion.sh`，或者不确定脚本状态，可以使用下面的一键“去控”命令。
 
-**运行“去控脚本”的步骤:**
+**一键运行“去控脚本”:**
 
-1.  确保 `disable_kejilion_monitoring.sh` 和 `kejilion.sh` 在同一个目录下。
-2.  给“去控脚本”添加执行权限：
-    ```bash
-    chmod +x disable_kejilion_monitoring.sh
-    ```
-3.  使用 `sudo` 运行脚本 (需要权限来修改 `/usr/local/bin/k`):
-    ```bash
-    sudo ./disable_kejilion_monitoring.sh
-    ```
+这条命令会自动从本仓库下载“去控脚本”并使用 `sudo` 权限执行，以确保能修改系统文件。
+
+```bash
+curl -sL https://raw.githubusercontent.com/fanassasj/kjqk/main/disable_kejilion_monitoring.sh | sudo bash
+```
